@@ -1,16 +1,16 @@
 import React from "react"
 
-const TestPage = () => {
+const AdminPage = () => {
   return (
     <div className="row justify-content-center">
       <div className="col-md-12 text-center">
-        <span className="display-1 d-block">Test Page</span>
+        <span className="display-1 d-block">Admin Page</span>
         <div className="mb-4 lead">
-          This is a test page that is protected by a login
+          This is the admin page protected by auth
         </div>
       </div>
     </div>
   )
 }
 
-export { TestPage }
+export { AdminPage }

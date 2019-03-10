@@ -4,7 +4,7 @@ import ReactDOM from "react-dom"
 import { Provider } from "react-redux"
 import { PrivateRoute } from "./_components/private-route"
 import { LoginPage } from "./_pages/login"
-import { TestPage } from "./_pages/test"
+import { AdminPage } from "./_pages/admin"
 
 import { store, history } from "./_helpers"
 import { Template } from "./Template"
@@ -15,9 +15,9 @@ const Root = () => (
     <Router history={history}>
       <Template>
         <Switch>
-          <PrivateRoute exact path="/" component={TestPage} />
+          <PrivateRoute exact path="/" component={AdminPage} />
           <Route path="/login" component={LoginPage} />
-          <PrivateRoute exact path="/test" component={TestPage} />
+          <PrivateRoute exact path="/admin" component={AdminPage} />
           <Route component={Page404} />
         </Switch>
       </Template>

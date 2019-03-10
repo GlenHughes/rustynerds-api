@@ -3,7 +3,7 @@ import { userService } from "../_services"
 import { alertActions } from "."
 import { history } from "../_helpers"
 
-function login(username, password) {
+function login(email, password) {
   function request(user) {
     return { type: userConstants.LOGIN_REQUEST, user }
   }
@@ -15,16 +15,16 @@ function login(username, password) {
   }
 
   return dispatch => {
-    dispatch(request({ username }))
+    dispatch(request({ email }))
 
-    userService.login(username, password).then(
+    userService.login(email, password).then(
       user => {
         if (!user) {
           dispatch(failure("Invalid login"))
           dispatch(alertActions.error("Invalid login"))
         } else {
           dispatch(success(user))
-          history.push("/test")
+          history.push("/admin")
         }
       },
       error => {

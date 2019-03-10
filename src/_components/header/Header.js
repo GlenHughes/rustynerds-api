@@ -45,7 +45,7 @@ class Header extends React.Component {
         <Link className="navbar-brand" to="/">
           <img
             id="logo"
-            src="./images/logo.png"
+            src="./images/logo.svg"
             className="d-block"
             alt="Your Logo"
           />
@@ -64,8 +64,8 @@ class Header extends React.Component {
         <div className="collapse navbar-collapse" id="navbarCollapse">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item active">
-              <Link className="nav-link" to="/claims">
-                Claims
+              <Link className="nav-link" to="/admin">
+                Admin
               </Link>
             </li>
           </ul>

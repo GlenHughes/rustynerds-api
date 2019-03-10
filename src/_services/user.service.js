@@ -2,10 +2,10 @@ import axios from "axios"
 import setAuthorizationToken from "../_helpers/set-auth-token"
 import { history, handleResponse, handleError } from "../_helpers"
 
-function login(username, password) {
+function login(email, password) {
   return axios
-    .post(`your auth endpoint`, {
-      username,
+    .post(`./api/login`, {
+      email,
       password,
     })
     .then(handleResponse)

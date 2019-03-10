@@ -9,7 +9,7 @@ describe("<Footer />", () => {
     expect(
       renderedComponent.contains(
         <footer className="container-fluid w-100 bg-dark text-light py-3 footer text-center">
-          <span className="text-muted">Copyright 2019 Your App Name.</span>
+          <span className="text-muted">Copyright 2019 Rusty Nerds.</span>
         </footer>,
       ),
     ).toBe(true)
