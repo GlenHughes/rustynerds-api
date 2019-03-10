@@ -10,7 +10,8 @@
     "name": "Glen Hughes"
   },
   "scripts": {
-    "start": "webpack-dev-server --config webpack/webpack.dev.js --host 0.0.0.0",
+    "client": "webpack-dev-server --config webpack/webpack.dev.js --host 0.0.0.0",
+    "dev": "concurrently -c blue.bold,magenta --kill-others \"yarn client\" \"cd ./server && yarn dev\"",
     "build": "webpack --config webpack/webpack.prod.js --env=production --progress --profile --colors",
     "test": "jest --coverage"
   },
@@ -66,6 +67,7 @@
     "babel-jest": "^24.3.1",
     "babel-loader": "^8.0.5",
     "babel-polyfill": "^6.26.0",
+    "concurrently": "^4.1.0",
     "css-loader": "^2.1.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.10.0",
