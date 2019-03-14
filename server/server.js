@@ -1,55 +1,91 @@
-const express = require("express")
-const morgan = require("morgan")
-const path = require("path")
-const WebRCON = require("webrconjs")
+const restify = require("restify")
+const errors = require("restify-errors")
+const mongoose = require("mongoose")
+const rjwt = require("restify-jwt-community")
+const config = require("./config")
+const User = require("./models/User")
 
-const app = express()
-app.use(morgan("combined"))
-app.use(express.static(path.join(__dirname, "/client/build")))
+console.log(config)
 
-app.get("/api/test", (req, res) => {
-  res.json({
-    message: "hello world",
+const server = restify.createServer({
+  name: config.NAME,
+  version: config.VERSION,
+})
+
+// trigger this error when some in-existing route being called
+server.on("NotFound", (req, res, err, cb) => {
+  console.log(JSON.stringify(err, null, 2)) // { "code": "ResourceNotFound", "message": "/xxxx does not exist" }
+  console.log(err.toString()) // ResourceNotFoundError: /xxxx does not exist
+  console.log(err.code) // Error
+  if (err instanceof errors.ResourceNotFoundError) {
+    console.log("CHUMBAWAMBA")
+  }
+
+  cb()
+})
+
+// - Middleware
+server.use(
+  restify.plugins.bodyParser({
+    mapParams: false,
+  }),
+)
+
+// - Protect routes
+server.use(rjwt({ secret: config.JWT_SECRET }).unless({ path: ["/api/auth"] }))
+
+server.listen(config.PORT, () => {
+  console.log("connected to restify")
+  mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true }, (err, db) => {
+    // mongoose.connect(
+    // "mongodb+srv://glen-bugsy:om6LWHMV4vcCmgcw@rustynerdsadmin-hr9o1.mongodb.net/rusty-nerds?retryWrites=true",
+    // { useNewUrlParser: true },
+    // (err, db) => {
+    console.log("connected to mongoose")
+    if (err) {
+      console.log(
+        "An error occurred while attempting to connect to MongoDB",
+        err,
+      )
+      process.exit(1)
+    }
+
+    console.log(
+      "%s v%s ready to accept connections on port %s in %s environment.",
+      server.name,
+      config.version,
+      config.port,
+      config.env,
+    )
+
+    require("./routes/users.js")({ db, server })
   })
 })
 
-function connectedCallback() {
-  console.log("CONNECTED")
-}
+// const WebRCON = require('webrconjs')
+// const rcon = new WebRCON('108.61.116.90', 28068)
 
-function disconnectedCallback() {
-  console.log("DISCONNECTED")
-}
+// rcon.on('connect', connectedCallback)
+// rcon.on('disconnect', disconnectedCallback)
+// rcon.on('message', messageCallback)
+// rcon.on('error', errorCallback)
 
-function messageCallback(message) {
-  console.log(`Message: ${message}`)
-}
+// res.json({
+//   success: false,
+//   message: 'Invalid credentials you nauty'
+// })
+// function connectedCallback () {
+//   console.log('CONNECTED')
+// }
 
-function errorCallback(error) {
-  console.log(`Error: ${error}`)
-}
+// function disconnectedCallback () {
+//   console.log('DISCONNECTED')
+// }
 
-app.post("/api/login", (req, res) => {
-  const rcon = new WebRCON("108.61.116.90", 28068)
+// function messageCallback (message) {
+//   console.log(`Message: ${message}`)
+// }
 
-  rcon.on("connect", connectedCallback)
-  rcon.on("disconnect", disconnectedCallback)
-  rcon.on("message", messageCallback)
-  rcon.on("error", errorCallback)
-
-  res.json({
-    success: false,
-    message: "Invalid credentials you nauty",
-  })
-})
-
-// The "catch all" handler: for any request that doesn't
-// match one above, send back React's index.html file.
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "/dist/index.html"))
-})
-
-const port = process.env.PORT || 5000
-app.listen(port)
-
-console.log(`server listening on ${port}`) // eslint-disable-line no-console
+// function errorCallback (error) {
+//   console.log(`Error: ${error}`)
+// }

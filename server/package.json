@@ -12,8 +12,13 @@
   "author": "Glen Hughes",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4",
-    "morgan": "^1.9.1",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^7.0.0",
+    "jsonwebtoken": "^8.5.0",
+    "mongoose": "^5.4.19",
+    "restify": "^8.1.0",
+    "restify-errors": "^7.0.0",
+    "restify-jwt-community": "^1.0.10",
     "webrconjs": "^1.0.0"
   },
   "devDependencies": {
