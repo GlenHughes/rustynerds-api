@@ -2,14 +2,19 @@ const restify = require("restify")
 const errors = require("restify-errors")
 const mongoose = require("mongoose")
 const rjwt = require("restify-jwt-community")
+const corsMiddleware = require("restify-cors-middleware")
 const config = require("./config")
-const User = require("./models/User")
+const User = require("./models/User") // eslint-disable-line no-unused-vars
 
 console.log(config)
 
 const server = restify.createServer({
   name: config.NAME,
   version: config.VERSION,
+})
+
+const cors = corsMiddleware({
+  origins: ["http://localhost:4000"],
 })
 
 // trigger this error when some in-existing route being called
@@ -24,15 +29,16 @@ server.on("NotFound", (req, res, err, cb) => {
   cb()
 })
 
+server.pre(cors.preflight)
+
 // - Middleware
 server.use(
   restify.plugins.bodyParser({
     mapParams: false,
   }),
+  cors.actual,
+  rjwt({ secret: config.JWT_SECRET }).unless({ path: ["/api/auth"] }), // protect routes
 )
-
-// - Protect routes
-server.use(rjwt({ secret: config.JWT_SECRET }).unless({ path: ["/api/auth"] }))
 
 server.listen(config.PORT, () => {
   console.log("connected to restify")

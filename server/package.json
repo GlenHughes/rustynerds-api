@@ -17,6 +17,7 @@
     "jsonwebtoken": "^8.5.0",
     "mongoose": "^5.4.19",
     "restify": "^8.1.0",
+    "restify-cors-middleware": "^1.1.1",
     "restify-errors": "^7.0.0",
     "restify-jwt-community": "^1.0.10",
     "webrconjs": "^1.0.0"
