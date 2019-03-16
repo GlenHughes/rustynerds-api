@@ -37,16 +37,15 @@ server.use(
     mapParams: false,
   }),
   cors.actual,
-  rjwt({ secret: config.JWT_SECRET }).unless({ path: ["/api/auth"] }), // protect routes
+  rjwt({ secret: config.JWT_SECRET }).unless({
+    path: ["/api/auth"],
+  }), // protect routes
 )
 
 server.listen(config.PORT, () => {
   console.log("connected to restify")
+
   mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true }, (err, db) => {
-    // mongoose.connect(
-    // "mongodb+srv://glen-bugsy:om6LWHMV4vcCmgcw@rustynerdsadmin-hr9o1.mongodb.net/rusty-nerds?retryWrites=true",
-    // { useNewUrlParser: true },
-    // (err, db) => {
     console.log("connected to mongoose")
     if (err) {
       console.log(
@@ -58,40 +57,13 @@ server.listen(config.PORT, () => {
 
     console.log(
       "%s v%s ready to accept connections on port %s in %s environment.",
-      server.name,
-      config.version,
-      config.port,
-      config.env,
+      config.NAME,
+      config.VERSION,
+      config.PORT,
+      config.ENV,
     )
 
-    require("./routes/users.js")({ db, server })
+    require("./routes/users")({ db, server })
+    require("./routes/rcon")({ server })
   })
 })
-
-// const WebRCON = require('webrconjs')
-// const rcon = new WebRCON('108.61.116.90', 28068)
-
-// rcon.on('connect', connectedCallback)
-// rcon.on('disconnect', disconnectedCallback)
-// rcon.on('message', messageCallback)
-// rcon.on('error', errorCallback)
-
-// res.json({
-//   success: false,
-//   message: 'Invalid credentials you nauty'
-// })
-// function connectedCallback () {
-//   console.log('CONNECTED')
-// }
-
-// function disconnectedCallback () {
-//   console.log('DISCONNECTED')
-// }
-
-// function messageCallback (message) {
-//   console.log(`Message: ${message}`)
-// }
-
-// function errorCallback (error) {
-//   console.log(`Error: ${error}`)
-// }
