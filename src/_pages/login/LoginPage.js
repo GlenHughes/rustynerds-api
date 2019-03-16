@@ -15,7 +15,7 @@ class LoginPage extends React.Component {
     dispatch(authenticationActions.logout())
 
     this.state = {
-      email: "",
+      username: "",
       password: "",
       submitted: false,
     }
@@ -44,16 +44,16 @@ class LoginPage extends React.Component {
     event.preventDefault()
 
     this.setState({ submitted: true })
-    const { email, password } = this.state
+    const { username, password } = this.state
     const { dispatch } = this.props
-    if (email && password) {
-      dispatch(authenticationActions.login(email, password))
+    if (username && password) {
+      dispatch(authenticationActions.login(username, password))
     }
   }
 
   render() {
     const { loggingIn } = this.props
-    const { email, password, submitted } = this.state
+    const { username, password, submitted } = this.state
     return (
       <Row>
         <Col />
@@ -61,18 +61,18 @@ class LoginPage extends React.Component {
           <h2 className="text-center">Staff Login</h2>
           <hr />
           <Form onSubmit={this.handleSubmit} className={submitted ? "" : ""}>
-            <Form.Group controlId="email">
-              <Form.Label>Email</Form.Label>
+            <Form.Group controlId="username">
+              <Form.Label>Username</Form.Label>
               <Form.Control
-                type="email"
-                placeholder="Enter email"
-                name="email"
-                value={email}
+                type="username"
+                placeholder="Enter Username"
+                name="username"
+                value={username}
                 onChange={this.handleChange}
-                className={`${submitted && !email ? " is-invalid" : ""}`}
+                className={`${submitted && !username ? " is-invalid" : ""}`}
               />
-              {submitted && !email && (
-                <div className="invalid-feedback">Email is required</div>
+              {submitted && !username && (
+                <div className="invalid-feedback">username is required</div>
               )}
             </Form.Group>
             <Form.Group controlId="password">
