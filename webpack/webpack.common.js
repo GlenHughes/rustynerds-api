@@ -1,4 +1,6 @@
+const dotenv = require("dotenv")
 const path = require("path")
+const webpack = require("webpack")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 
 const svgoOptions = {
@@ -14,12 +16,23 @@ const svgoOptions = {
   ],
 }
 
+const { parsed } = dotenv.config({ path: "./src/.env" })
+
+// console.log(parsed, error)
+
+const envKeys = Object.keys(parsed).reduce((prev, next) => {
+  // eslint-disable-next-line no-param-reassign
+  prev[`process.env.${next}`] = JSON.stringify(parsed[next])
+  return prev
+}, {})
+
 const imagemin = require("imagemin-svgo")
 
 module.exports = {
   context: path.join(process.cwd(), "src"),
   entry: "./index.js",
   plugins: [
+    new webpack.DefinePlugin(envKeys),
     new HtmlWebpackPlugin({
       template: "./index.html",
       filename: "./index.html",

@@ -1,11 +1,10 @@
 import axios from "axios"
 import setAuthorizationToken from "../_helpers/set-auth-token"
 import { history, handleResponse, handleError } from "../_helpers"
-import config from "../config"
 
 function login(username, password) {
   return axios
-    .post(`${config.API_URL}/api/auth`, {
+    .post(`${process.env.API_URL}:${process.env.API_PORT}/api/auth`, {
       username,
       password,
     })
