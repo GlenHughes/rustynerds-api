@@ -1,10 +1,9 @@
-import axios from "axios"
-import setAuthorizationToken from "../_helpers/set-auth-token"
+import { agent } from "../_helpers/ajax-handlers"
 import { history, handleResponse, handleError } from "../_helpers"
 
 function login(username, password) {
-  return axios
-    .post(`${process.env.API_URL}:${process.env.API_PORT}/api/auth`, {
+  return agent
+    .post("/api/auth", {
       username,
       password,
     })
@@ -14,7 +13,6 @@ function login(username, password) {
       if (token) {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem("user", JSON.stringify(response))
-        setAuthorizationToken(token)
       }
 
       return response
@@ -25,7 +23,6 @@ function login(username, password) {
 function logout() {
   // remove user from local storage to log user out
   localStorage.removeItem("user")
-  setAuthorizationToken(false)
   history.push("/login")
 }
 

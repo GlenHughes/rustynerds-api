@@ -6,3 +6,19 @@ main {
 main > .container {
   margin-top: 100px;
 }
+
+.fa-sync-alt {
+  color: green;
+  cursor: pointer;
+}
+
+.fa-discord {
+  cursor: pointer;
+  margin-right: 6px;
+  font-size: 22px;
+}
+
+.fa-steam {
+  cursor: pointer;
+  font-size: 22px;
+}

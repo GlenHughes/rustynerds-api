@@ -92,3 +92,56 @@ exports.players = () => {
     }
   })
 }
+
+exports.formatPlayers = players => {
+  console.log(players.message)
+
+  const rows = players.message.split("\r\n")
+  const columns = rows
+    .shift()
+    .split(/\s+/)
+    .filter(column => {
+      return column !== ""
+    })
+
+  let formattedRows
+  // handle no players online
+  if (rows[0] === "") {
+    formattedRows = []
+  } else {
+    // format response into a json object
+    formattedRows = rows.map(row => {
+      const splitRow = row.replace(/\s\s+/g, " ")
+      const pieces = splitRow.split(" ")
+      const id = pieces[0]
+
+      let name
+      let ping
+      if (Number.isInteger(parseInt(pieces[3], 16))) {
+        name = `${pieces[1]} ${pieces[2]}`
+        ping = `${pieces[3]}`
+      } else {
+        name = `${pieces[1]}`
+        ping = `${pieces[2]}`
+      }
+
+      return {
+        id,
+        name,
+        ping,
+      }
+    })
+  }
+
+  // remove any dead rows
+  formattedRows.filter(row => {
+    return !row.id
+  })
+
+  console.log(rows, formattedRows, columns)
+
+  return {
+    columns,
+    data: formattedRows,
+  }
+}

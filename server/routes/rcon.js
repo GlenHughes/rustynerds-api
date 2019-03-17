@@ -10,10 +10,12 @@ module.exports = ctx => {
     try {
       // - Authenticate user
       const players = await rcon.players()
+      const { columns, data } = rcon.formatPlayers(players)
 
       response.send({
         success: true,
-        players,
+        data,
+        columns,
       })
 
       return next()
@@ -24,6 +26,7 @@ module.exports = ctx => {
 
   server.post("/api/grantKit", async (request, response, next) => {
     console.log("Grant kit called")
+
     try {
       const { steamID, kit } = request.body
       const message = await rcon.grantKit(steamID, kit)

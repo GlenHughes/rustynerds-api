@@ -14,7 +14,10 @@ const server = restify.createServer({
 })
 
 const cors = corsMiddleware({
-  origins: ["http://localhost:4000"],
+  preflightMaxAge: 5,
+  origins: ["http://localhost:4000", "http://localhost:5000"],
+  allowHeaders: ["Authorization"],
+  exposeHeaders: ["Authorization"],
 })
 
 // trigger this error when some in-existing route being called
@@ -33,10 +36,10 @@ server.pre(cors.preflight)
 
 // - Middleware
 server.use(
+  cors.actual,
   restify.plugins.bodyParser({
     mapParams: false,
   }),
-  cors.actual,
   rjwt({ secret: config.JWT_SECRET }).unless({
     path: ["/api/auth"],
   }), // protect routes

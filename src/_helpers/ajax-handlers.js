@@ -1,3 +1,36 @@
+import axios from "axios"
+import { history } from "./history"
+
+const agent = axios.create({
+  baseURL: `${process.env.API_URL}:${process.env.API_PORT}`,
+  headers: { "Content-Type": "application/json" },
+})
+
+const getAuthorizationHeader = () => {
+  const user = localStorage.getItem("user")
+  if (user) {
+    const { token } = JSON.parse(user)
+    if (token) {
+      return {
+        headers: {
+          common: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      }
+    }
+  }
+
+  return {}
+}
+
+agent.interceptors.request.use(config => {
+  const authHeaders = getAuthorizationHeader()
+  return { ...config, ...authHeaders }
+})
+
+export { agent }
+
 /* eslint-disable no-console */
 export function handleResponse(response) {
   const { data, status } = response
@@ -11,4 +44,9 @@ export function handleResponse(response) {
 
 export function handleError(error) {
   console.warn(error)
+  const { status } = error.response
+  if (status === 401) {
+    localStorage.removeItem("user")
+    history.push("/login")
+  }
 }
