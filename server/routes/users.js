@@ -53,6 +53,7 @@ module.exports = ctx => {
         iat,
         exp,
         token,
+        username,
       })
 
       return next()

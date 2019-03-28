@@ -7,7 +7,7 @@ import { Row, Col, Table } from "react-bootstrap"
 import { rconActions } from "../../_actions"
 import { store } from "../../_helpers"
 
-class AdminPage extends React.Component {
+class PlayersPage extends React.Component {
   constructor(props) {
     super(props)
 
@@ -115,5 +115,5 @@ function mapStateToProps(state) {
   }
 }
 
-const connectedAdminPage = withRouter(connect(mapStateToProps)(AdminPage))
-export { connectedAdminPage as AdminPage }
+const connectedPlayersPage = withRouter(connect(mapStateToProps)(PlayersPage))
+export { connectedPlayersPage as PlayersPage }

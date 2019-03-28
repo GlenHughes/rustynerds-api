@@ -60,10 +60,7 @@ exports.grantKit = (steamID, kit) => {
 
       client.connection.on("connect", () => {
         client.execute(`chat user add ${steamID} ${kit}`)
-      })
-
-      client.connection.on("message", message => {
-        resolve(message)
+        resolve("Message sent to server successfully")
       })
     } catch (error) {
       reject(error)
@@ -115,14 +112,37 @@ exports.formatPlayers = players => {
       const pieces = splitRow.split(" ")
       const id = pieces[0]
 
+      const isNumber = number => {
+        console.log(`Is number: ${number}`, parseInt(number, 10))
+        return parseInt(number, 10)
+      }
+
+      // console.log(splitRow)
+      // console.log(pieces)
+      // console.log(pieces[2])
+
       let name
       let ping
-      if (Number.isInteger(parseInt(pieces[3], 16))) {
-        name = `${pieces[1]} ${pieces[2]}`
-        ping = `${pieces[3]}`
-      } else {
+      if (isNumber(pieces[2])) {
+        console.log(`3 section was ping: ${pieces[2]}`)
         name = `${pieces[1]}`
         ping = `${pieces[2]}`
+      } else if (isNumber(pieces[3])) {
+        console.log(`4 section was ping: ${pieces[2]}`)
+        name = `${pieces[1]}${pieces[2]}`
+        ping = `${pieces[3]}`
+      } else if (isNumber(pieces[4])) {
+        console.log(`5 section was ping: ${pieces[2]}`)
+        name = `${pieces[1]}${pieces[2]}${pieces[3]}`
+        ping = `${pieces[4]}`
+      } else if (isNumber(pieces[5])) {
+        console.log(`6 section was ping: ${pieces[2]}`)
+        name = `${pieces[1]}${pieces[2]}${pieces[3]}${pieces[4]}`
+        ping = `${pieces[5]}`
+      } else {
+        console.log("max section was ping")
+        name = `${pieces[1]}`
+        ping = "UNKNOWN"
       }
 
       return {
@@ -133,15 +153,12 @@ exports.formatPlayers = players => {
     })
   }
 
-  // remove any dead rows
-  formattedRows.filter(row => {
-    return !row.id
-  })
-
   console.log(rows, formattedRows, columns)
+
+  const data = formattedRows.filter(row => row.id !== "")
 
   return {
     columns,
-    data: formattedRows,
+    data,
   }
 }
