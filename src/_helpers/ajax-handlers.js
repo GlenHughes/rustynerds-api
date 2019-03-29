@@ -1,8 +1,14 @@
 import axios from "axios"
 import { history } from "./history"
 
+// - No port needed for PROD
+const url =
+  process.env.NODE_ENV === "development"
+    ? `${process.env.API_URL}:${process.env.API_PORT}`
+    : process.env.API_URL
+
 const agent = axios.create({
-  baseURL: `${process.env.API_URL}:${process.env.API_PORT}`,
+  baseURL: url,
   headers: { "Content-Type": "application/json" },
 })
 
