@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server/server.js"
+    "start": "forever start ./forever/production.json"
   },
   "keywords": [],
   "author": "Glen Hughes",
@@ -14,6 +14,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "dotenv": "^7.0.0",
+    "forever": "^0.15.3",
     "jsonwebtoken": "^8.5.0",
     "mongoose": "^5.4.19",
     "restify": "^8.1.0",
