@@ -20,6 +20,7 @@ const cors = corsMiddleware({
     "http://localhost:5000",
     "https://rustynerds.com",
     "https://staff.rustynerds.com",
+    "https://api.rustynerds.com",
   ],
   allowHeaders: ["Authorization"],
   exposeHeaders: ["Authorization"],

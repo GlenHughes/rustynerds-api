@@ -4,5 +4,5 @@
   "append": true,
   "watch": true,
   "script": "server.js",
-  "sourceDir": "/var/www/html/rustynerds.com/app/server"
+  "sourceDir": "../"
 }
