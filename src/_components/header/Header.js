@@ -24,9 +24,7 @@ class Header extends React.Component {
 
     return (
       <DropdownButton alignRight title={username}>
-        <Dropdown.Item>
-          <Link to="/logout">Logout</Link>
-        </Dropdown.Item>
+        <Dropdown.Item href="/logout">Logout</Dropdown.Item>
       </DropdownButton>
     )
   }

@@ -59,8 +59,12 @@ exports.grantKit = (steamID, kit) => {
       })
 
       client.connection.on("connect", () => {
-        client.execute(`chat user add ${steamID} ${kit}`)
-        resolve("Message sent to server successfully")
+        const command = `chat user add ${steamID} ${kit}`
+        const message = `${steamID} granted ${kit} kit successfully`
+        console.log(command)
+        client.execute(command)
+        client.execute(`say ${message}`)
+        resolve(message)
       })
     } catch (error) {
       reject(error)

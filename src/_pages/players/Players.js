@@ -25,7 +25,7 @@ class PlayersPage extends React.Component {
     dispatch(rconActions.players())
     this.interval = setInterval(() => {
       dispatch(rconActions.players())
-    }, 5000)
+    }, 30000)
     // listen for logout and remove interval
     store.subscribe(() => {
       const state = store.getState()
@@ -69,7 +69,15 @@ class PlayersPage extends React.Component {
             onClick={this.handleGrant}
             title={`Click to grant ${player.name} Discord kit`}
           />
-          <i className="fab fa-steam" />
+          <i
+            className="fab fa-steam"
+            role="button"
+            tabIndex="0"
+            data-steam-id={player.id}
+            data-kit="steam"
+            onClick={this.handleGrant}
+            title={`Click to grant ${player.name} Steam kit`}
+          />
         </td>
       </tr>
     ))

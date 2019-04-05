@@ -1,5 +1,6 @@
 import React from "react"
 import { connect } from "react-redux"
+import { Alert } from "react-bootstrap"
 import { Header } from "./_components/header"
 import { Footer } from "./_components/footer"
 import { history } from "./_helpers"
@@ -19,18 +20,23 @@ class Template extends React.Component {
 
   render() {
     const { alert, children } = this.props
+
     return (
       <main className="d-flex flex-column">
         <Header />
         <div className="container flex-fill">
           {alert.message && (
-            <div
-              className={`col-sm-9 col-md-7 col-lg-5 mx-auto text-center alert ${
-                alert.type
-              }`}
+            <Alert
+              className="col-sm-9 col-md-7 col-lg-5 mx-auto text-center"
+              variant={alert.type}
             >
-              {alert.message}
-            </div>
+              <Alert.Heading>
+                {alert.type === "danger"
+                  ? "Oh snap! Something went wrong!"
+                  : "Success!"}
+              </Alert.Heading>
+              <p>{alert.message}</p>
+            </Alert>
           )}
           {children}
         </div>
