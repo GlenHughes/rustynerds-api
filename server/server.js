@@ -18,6 +18,7 @@ const cors = corsMiddleware({
   origins: [
     "http://localhost:4000",
     "http://localhost:5000",
+    "http://localhost:8000",
     "https://rustynerds.com",
     "https://staff.rustynerds.com",
     "https://api.rustynerds.com",
@@ -47,7 +48,7 @@ server.use(
     mapParams: false,
   }),
   rjwt({ secret: config.JWT_SECRET }).unless({
-    path: ["/api/auth"],
+    path: ["/api/auth", "/api/stats/x2", "/api/stats/x5"],
   }), // protect routes
 )
 
@@ -74,5 +75,6 @@ server.listen(config.PORT, () => {
 
     require("./routes/users")({ db, server })
     require("./routes/rcon")({ server })
+    require("./routes/stats")({ server })
   })
 })

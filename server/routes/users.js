@@ -10,7 +10,7 @@ module.exports = ctx => {
   const { server } = ctx
 
   // - Register user
-  // server.post("/register", (request, response, next) => {
+  // server.post("/api/register", (request, response, next) => {
   //   const { username, password } = request.body
 
   //   const user = new User({

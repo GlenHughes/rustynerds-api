@@ -21,7 +21,9 @@
     "restify-cors-middleware": "^1.1.1",
     "restify-errors": "^7.0.0",
     "restify-jwt-community": "^1.0.10",
-    "webrconjs": "^1.0.0"
+    "webrconjs": "^1.0.0",
+    "mysql": "^2.17.1",
+    "node-cache": "^4.2.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"
