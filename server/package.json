@@ -15,7 +15,7 @@
     "bcryptjs": "^2.4.3",
     "dotenv": "^7.0.0",
     "forever": "^0.15.3",
-    "jsonwebtoken": "^8.5.0",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^5.4.19",
     "restify": "^8.1.0",
     "restify-cors-middleware": "^1.1.1",
